@@ -1,17 +1,19 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../../actions/action'
 import Cards from '../cards/Cards'
 
 
 
 function Home() {
+    const dispatch=useDispatch()
     const product = useSelector(state => state.product)
     const [filteredData, setFilteredData] = useState(product)
   
 
     const AllData = () => {
-        axios("https://fakestoreapi.com/products").then((res) => setFilteredData(res.data))
+        axios("https://fakestoreapi.com/products").then((res) => dispatch(getProducts(res.data)))
     }
 
     useEffect(() => {
@@ -21,6 +23,9 @@ function Home() {
         axios(`https://fakestoreapi.com/products/category/${catItem}`).then((res) => setFilteredData(res.data))
 
     }
+    useEffect(()=>{
+        setFilteredData([...product])
+    }, [product])
 
     return (
         <>

@@ -14,7 +14,7 @@ function ProductDetails() {
     useEffect(() => {
         axios(`https://fakestoreapi.com/products/${id}`).then((res) => setProduct(res.data))
     }, [])
-
+    
     const addProductToCart = (product) => {
         const prod = { ...product, qunatity: 1 }
         dispatch(addProducts(prod))
